@@ -14,9 +14,9 @@ def validate(doc, method=None):
 
 def validate_zero_tax_options(doc):
     if doc.gst_treatment != "Taxable":
-        print(f"\n\n{doc.doctype}\n\n")
+        print(f"\n\n doctype={doc.doctype}\n\n")
         a = frappe.db.get_list('Company')
-        print(f"\n\n{a}\n\n")
+        print(f"\n\n Companies={a}\n\n")
         doc.gst_rate = 0
         return
 
