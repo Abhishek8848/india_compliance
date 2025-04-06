@@ -26,7 +26,9 @@ def validate_hsn_code(doc):
     # HSN Code is being validated only for sales items
     if not doc.is_sales_item:
         return
-
+    print(f"\n\n================================================\n\n")
+    print(f"\n\n{doc.doctype}\n\n")
+    print(f"\n\n{doc.name}\n\n")
     _validate_hsn_code(doc.gst_hsn_code)
 
 
