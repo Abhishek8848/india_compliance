@@ -19,6 +19,7 @@ def validate_zero_tax_options(doc):
 
     if doc.gst_rate == 0:
         print(f"\n\n doctype={doc.doctype}\n\n")
+        print(f"\n\n name={doc.name}\n\n")
         a = frappe.db.get_list('Company')
         print(f"\n\n Companies={a}\n\n")
         frappe.throw(
