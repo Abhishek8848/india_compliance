@@ -14,13 +14,13 @@ def validate(doc, method=None):
 
 def validate_zero_tax_options(doc):
     if doc.gst_treatment != "Taxable":
-        print(f"\n\n doctype={doc.doctype}\n\n")
-        a = frappe.db.get_list('Company')
-        print(f"\n\n Companies={a}\n\n")
         doc.gst_rate = 0
         return
 
     if doc.gst_rate == 0:
+        print(f"\n\n doctype={doc.doctype}\n\n")
+        a = frappe.db.get_list('Company')
+        print(f"\n\n Companies={a}\n\n")
         frappe.throw(
             _("GST Rate cannot be zero for <strong>Taxable</strong> GST Treatment"),
             title=_("Invalid GST Rate"),
