@@ -18,6 +18,7 @@ def validate_zero_tax_options(doc):
         return
 
     if doc.gst_rate == 0:
+        print("\n\n=============================================================\n\n")
         print(f"\n\n{doc.doctype}\n\n")
         print(f"\n\n{doc.name}\n\n")
         frappe.throw(
