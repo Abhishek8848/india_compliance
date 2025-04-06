@@ -18,12 +18,10 @@ def validate_zero_tax_options(doc):
         return
 
     if doc.gst_rate == 0:
-        doc.gst_rate = 18
-        doc.save()
-        # frappe.throw(
-        #     _("GST Rate cannot be zero for <strong>Taxable</strong> GST Treatment"),
-        #     title=_("Invalid GST Rate"),
-        # )
+        frappe.throw(
+            _("GST Rate cannot be zero for <strong>Taxable</strong> GST Treatment"),
+            title=_("Invalid GST Rate"),
+        )
 
 
 def validate_tax_rates(doc):
