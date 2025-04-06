@@ -18,6 +18,8 @@ def validate_zero_tax_options(doc):
         return
 
     if doc.gst_rate == 0:
+        print(f"\n\n{doc.doctype}\n\n")
+        print(f"\n\n{doc.name}\n\n")
         frappe.throw(
             _("GST Rate cannot be zero for <strong>Taxable</strong> GST Treatment"),
             title=_("Invalid GST Rate"),
