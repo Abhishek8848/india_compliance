@@ -49,7 +49,10 @@ def update_item_document(taxes, hsn_code):
 
 def validate_hsn_code(hsn_code):
     validate_hsn_code, valid_hsn_length = get_hsn_settings()
-
+    print(f"\n\n\n\nvalidate_hsn_code={validate_hsn_code}\n\n\n\n\n")
+    print(f"\n\n\n\n valid_hsn_length={valid_hsn_length}\n\n\n\n\n")
+    setting = get_hsn_settings()
+    print(f"\n\n\n\n setting={setting}\n\n\n\n\n")
     if not validate_hsn_code:
         return
 
