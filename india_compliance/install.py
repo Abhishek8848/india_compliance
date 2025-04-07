@@ -82,7 +82,8 @@ def after_install():
 
 def run_post_install_patches():
     if not frappe.db.exists("Company", {"country": "India"}):
-        print(f"\n\n\n============================India=================================\n\n\n")
+        a = frappe.db.get_list("Company")
+        print(f"\n\n\n============================a={a}=================================\n\n\n")
         return
 
     frappe.flags.in_patch = True
