@@ -71,7 +71,9 @@ def get_indian_companies():
 
 
 def create_or_update_item_tax_templates(companies):
+    print("\n\n=================Enter1=================\n\n")
     if not companies:
+        print("\n\n=================Enter2=================\n\n")
         return
 
     DOCTYPE = "Item Tax Template"
@@ -114,7 +116,7 @@ def create_or_update_item_tax_templates(companies):
             continue
 
         doc.gst_rate = next(iter(gst_rates))
-
+        print(f"\n\n=================gst_rate={doc.gst_rate}=================\n\n")
         if doc.gst_treatment != "Taxable":
             # Cases where patch is run again
             continue
