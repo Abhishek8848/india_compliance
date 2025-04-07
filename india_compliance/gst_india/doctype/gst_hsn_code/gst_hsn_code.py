@@ -15,6 +15,10 @@ from india_compliance.gst_india.utils import (
 class GSTHSNCode(Document):
     def validate(self):
         validate_hsn_code(self.hsn_code)
+            
+        print(f"\n\n\n\n doctype={self.doctype}\n\n\n\n\n")
+        print(f"\n\n\n\n name={self.name}\n\n\n\n\n")
+        print(f"\n\n\n\n hsn_code={self.hsn_code}\n\n\n\n\n")
 
 
 @frappe.whitelist()
@@ -53,9 +57,6 @@ def validate_hsn_code(hsn_code):
     print(f"\n\n\n\n valid_hsn_length={valid_hsn_length}\n\n\n\n\n")
     setting = get_hsn_settings()
     print(f"\n\n\n\n setting={setting}\n\n\n\n\n")
-    print(f"\n\n\n\n doctype={self.doctype}\n\n\n\n\n")
-    print(f"\n\n\n\n name={self.name}\n\n\n\n\n")
-    print(f"\n\n\n\n hsn_code={hsn_code}\n\n\n\n\n")
     if not validate_hsn_code:
         return
 
