@@ -2,6 +2,7 @@ import click
 
 import frappe
 import os
+import random
 import json
 from india_compliance.audit_trail.setup import setup_fixtures as setup_audit_trail
 from india_compliance.gst_india.constants import BUG_REPORT_URL
