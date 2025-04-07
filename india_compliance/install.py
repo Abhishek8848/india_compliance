@@ -66,6 +66,12 @@ def after_install():
         print("Patching Existing Data...")
         run_post_install_patches()
 
+        print("Updating Item Tax Template Test Records...")
+        update_item_tax_template_test_records()
+
+        print("Updating Item Test Records...")
+        update_item_gst_hsn_code_from_test_records()
+
     except Exception as e:
         click.secho(
             (
@@ -82,8 +88,6 @@ def after_install():
 
 def run_post_install_patches():
     if not frappe.db.exists("Company", {"country": "India"}):
-        a = frappe.db.get_list("Company")
-        print(f"\n\n\n============================a={a}=================================\n\n\n")
         return
 
     frappe.flags.in_patch = True
@@ -115,8 +119,59 @@ def after_app_install(app_name):
 
     if app_name == "education":
         create_education_custom_fields()
+        
+        
+def update_item_tax_template_test_records():
+    # Step 1: Load existing test records from the file
+    test_records_path = frappe.get_app_path("erpnext", "accounts", "doctype", "item_tax_template", "test_records.json")
+    
+    try:
+        with open(test_records_path, "r") as file:
+            test_records = json.load(file)
+    except FileNotFoundError:
+        frappe.throw(f"File not found: {test_records_path}")
+        return
 
+    # Step 2: Modify the main doctype records (not child tables)
+    for record in test_records:
+        record["gst_rate"] = 18.0  # Example: Setting gst_rate same as tax_rate
 
+    # Step 3: Save the modified test records back to the file
+    with open(test_records_path, "w") as file:
+        json.dump(test_records, file, indent=4)
+
+    frappe.msgprint("Test records updated successfully.")
+
+def update_item_gst_hsn_code_from_test_records():
+    # Step 1: Load existing test records from the file
+    test_records_path = frappe.get_app_path("erpnext", "stock", "doctype", "item", "test_records.json")
+    
+    try:
+        with open(test_records_path, "r") as file:
+            test_records = json.load(file)
+    except FileNotFoundError:
+        frappe.throw(f"File not found: {test_records_path}")
+        return
+
+    # Step 2: Modify the main doctype records (not child tables)
+    for record in test_records:
+        gst_hsn_code = frappe.db.get_all("GST HSN Code",["hsn_code"],pluck='hsn_code')
+        for gst in gst_hsn_code:
+            new_hsn = frappe.new_doc("GST HSN Code")
+            new_hsn.hsn_code = ''.join(random.choices('0123456789', k=6))
+            new_hsn.description = record.get("description")
+        
+            if new_hsn.hsn_code != gst_hsn_code:
+                new_hsn.save()
+                break
+
+        record["gst_hsn_code"] = new_hsn.hsn_code
+
+    # Step 3: Save the modified test records back to the file
+    with open(test_records_path, "w") as file:
+        json.dump(test_records, file, indent=4)
+
+    print("Test records updated successfully.")
 
 def before_install():
     app_name = "india_compliance" 
